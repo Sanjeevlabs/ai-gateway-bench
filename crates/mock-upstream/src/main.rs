@@ -3,6 +3,19 @@
 use axum::{routing::post, Json, Router};
 use serde_json::{json, Value};
 
+async fn messages() -> Json<Value> {
+    Json(json!({
+        "id": "msg_gwbench",
+        "type": "message",
+        "role": "assistant",
+        "model": "mock-upstream",
+        "content": [{"type": "text", "text": "stub response"}],
+        "stop_reason": "end_turn",
+        "stop_sequence": null,
+        "usage": {"input_tokens": 1, "output_tokens": 2}
+    }))
+}
+
 async fn chat_completions() -> Json<Value> {
     Json(json!({
         "id": "chatcmpl-gwbench",
@@ -28,7 +41,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .ok()
         .and_then(|value| value.parse::<u16>().ok())
         .unwrap_or(8080);
-    let app = Router::new().route("/v1/chat/completions", post(chat_completions));
+    let app = Router::new()
+        .route("/v1/chat/completions", post(chat_completions))
+        .route("/v1/messages", post(messages));
     let listener = tokio::net::TcpListener::bind(("0.0.0.0", port)).await?;
     println!("mock upstream listening on {listener:?}");
     // Streaming and configurable response timing are intentionally deferred.
