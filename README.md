@@ -12,6 +12,14 @@ Gateways compared: LiteLLM (Rust), LiteLLM (Python v1), Portkey, Bifrost.
 
 ![AIGatewayBench overhead comparison](analyze/overhead_comparison.png)
 
+![Estimated request cost](analyze/cost_per_million.png)
+
+The cost chart estimates gateway request cost from measured CPU, peak RSS, and sustained throughput.
+
+![Whole-session gateway overhead](analyze/session_overhead.png)
+
+The session chart replays deterministic Claude Code and Codex-style control loops with non-streaming requests for apples-to-apples comparison.
+
 ## What it tests
 
 Each scenario is one folder under `scenarios/`. Load/streaming scenarios use Locust; the rest are plain Python scripts.
@@ -34,10 +42,7 @@ See [`docs/WHAT_THE_BENCH_TESTS.md`](docs/WHAT_THE_BENCH_TESTS.md) for the full 
 ```bash
 python -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt
 
-# 1. start the deterministic mock upstream
-uvicorn mock.app:app --port 9000
-
-# Rust high-concurrency mock alternative
+# 1. start the deterministic Rust mock upstream
 cargo run --release -p mock-upstream
 
 # 2. start a gateway pointed at the mock (see gateways/<name>/README.md)
@@ -54,7 +59,7 @@ Per-gateway setup (how to start each and point it at the mock) is in `gateways/<
 
 ## Results
 
-The published chart is generated from real runs, not placeholders. Current numbers are a first cut (n=30, single host); methodology and sample size are noted on the chart. Raw per-run data is in `results/`.
+The charts are generated from real local runs against the fast Rust mock, not placeholders. Raw per-run data is in `results/`.
 
 ## Cost estimate
 
