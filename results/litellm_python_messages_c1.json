@@ -8,10 +8,10 @@
     "p50": null,
     "p99": null
   },
-  "label": "python-anthropic-c1",
-  "latency_p50_ms": 27.791,
-  "latency_p99_ms": 31.965,
-  "peak_rss_mb": 319.726,
+  "label": "python-messages-c1-corrected",
+  "latency_p50_ms": 27.733,
+  "latency_p99_ms": 31.077,
+  "peak_rss_mb": null,
   "streaming": false,
   "ttft_ms": {
     "p50": null,

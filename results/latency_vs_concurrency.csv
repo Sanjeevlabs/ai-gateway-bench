@@ -1,0 +1,17 @@
+gateway,concurrency,p99_added_latency_ms
+litellm-rust,1,1.2800000000000011
+litellm-python,1,8.904000000000003
+bifrost,1,2.9220000000000006
+portkey,1,3.692
+litellm-rust,4,1.5470000000000006
+litellm-python,4,25.397000000000002
+bifrost,4,0.8140000000000001
+portkey,4,1.4469999999999992
+litellm-rust,8,0.7070000000000007
+litellm-python,8,60.685
+bifrost,8,1.657
+portkey,8,1.8440000000000012
+litellm-rust,16,-0.08099999999999952
+litellm-python,16,278.049
+bifrost,16,0.9420000000000002
+portkey,16,2.0

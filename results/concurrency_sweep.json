@@ -1,0 +1,114 @@
+[
+  {
+    "gateway": "litellm-rust",
+    "concurrency": 1,
+    "p99_overhead_ms": 1.2800000000000011,
+    "gateway_p99_ms": 23.453,
+    "baseline_p99_ms": 22.173
+  },
+  {
+    "gateway": "litellm-python",
+    "concurrency": 1,
+    "p99_overhead_ms": 8.904000000000003,
+    "gateway_p99_ms": 31.077,
+    "baseline_p99_ms": 22.173
+  },
+  {
+    "gateway": "bifrost",
+    "concurrency": 1,
+    "p99_overhead_ms": 2.9220000000000006,
+    "gateway_p99_ms": 25.095,
+    "baseline_p99_ms": 22.173
+  },
+  {
+    "gateway": "portkey",
+    "concurrency": 1,
+    "p99_overhead_ms": 3.692,
+    "gateway_p99_ms": 25.865,
+    "baseline_p99_ms": 22.173
+  },
+  {
+    "gateway": "litellm-rust",
+    "concurrency": 4,
+    "p99_overhead_ms": 1.5470000000000006,
+    "gateway_p99_ms": 25.948,
+    "baseline_p99_ms": 24.401
+  },
+  {
+    "gateway": "litellm-python",
+    "concurrency": 4,
+    "p99_overhead_ms": 25.397000000000002,
+    "gateway_p99_ms": 49.798,
+    "baseline_p99_ms": 24.401
+  },
+  {
+    "gateway": "bifrost",
+    "concurrency": 4,
+    "p99_overhead_ms": 0.8140000000000001,
+    "gateway_p99_ms": 25.215,
+    "baseline_p99_ms": 24.401
+  },
+  {
+    "gateway": "portkey",
+    "concurrency": 4,
+    "p99_overhead_ms": 1.4469999999999992,
+    "gateway_p99_ms": 25.848,
+    "baseline_p99_ms": 24.401
+  },
+  {
+    "gateway": "litellm-rust",
+    "concurrency": 8,
+    "p99_overhead_ms": 0.7070000000000007,
+    "gateway_p99_ms": 25.928,
+    "baseline_p99_ms": 25.221
+  },
+  {
+    "gateway": "litellm-python",
+    "concurrency": 8,
+    "p99_overhead_ms": 60.685,
+    "gateway_p99_ms": 85.906,
+    "baseline_p99_ms": 25.221
+  },
+  {
+    "gateway": "bifrost",
+    "concurrency": 8,
+    "p99_overhead_ms": 1.657,
+    "gateway_p99_ms": 26.878,
+    "baseline_p99_ms": 25.221
+  },
+  {
+    "gateway": "portkey",
+    "concurrency": 8,
+    "p99_overhead_ms": 1.8440000000000012,
+    "gateway_p99_ms": 27.065,
+    "baseline_p99_ms": 25.221
+  },
+  {
+    "gateway": "litellm-rust",
+    "concurrency": 16,
+    "p99_overhead_ms": -0.08099999999999952,
+    "gateway_p99_ms": 31.776,
+    "baseline_p99_ms": 31.857
+  },
+  {
+    "gateway": "litellm-python",
+    "concurrency": 16,
+    "p99_overhead_ms": 278.049,
+    "gateway_p99_ms": 309.906,
+    "baseline_p99_ms": 31.857
+  },
+  {
+    "gateway": "bifrost",
+    "concurrency": 16,
+    "p99_overhead_ms": 0.9420000000000002,
+    "gateway_p99_ms": 32.799,
+    "baseline_p99_ms": 31.857
+  },
+  {
+    "gateway": "portkey",
+    "concurrency": 16,
+    "p99_overhead_ms": 2.0,
+    "gateway_p99_ms": 33.857,
+    "baseline_p99_ms": 31.857
+  }
+]

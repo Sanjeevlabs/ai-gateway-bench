@@ -10,7 +10,7 @@ Data is read from results/, never hard-coded. Run the bench first, then:
 
 from __future__ import annotations
 
-import json
+import csv
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -27,10 +27,10 @@ OTHER_COLOR = "#3a3f4b"
 
 # gateway key in overhead_summary.json -> (display label, memory summary file)
 GATEWAYS = {
-    "litellm-rust": ("LiteLLM (Rust)", "mem_litellm_rust_release.txt"),
-    "bifrost": ("Bifrost", "mem_bifrost_messages.txt"),
-    "portkey": ("Portkey", "mem_portkey_messages.txt"),
-    "litellm-python": ("LiteLLM (Python v1)", "mem_litellm_python_messages.txt"),
+    "litellm-rust": "LiteLLM (Rust)",
+    "bifrost": "Bifrost",
+    "portkey": "Portkey",
+    "litellm-python": "LiteLLM (Python v1)",
 }
 
 
@@ -42,22 +42,16 @@ class Row:
     is_litellm: bool
 
 
-def _peak_rss_mb(summary_file: str) -> float:
-    for line in (RESULTS / summary_file).read_text().splitlines():
-        if line.startswith("peak_rss_mb="):
-            return float(line.split("=", 1)[1])
-    raise ValueError(f"peak_rss_mb missing from {summary_file}")
-
-
 def _load() -> list[Row]:
-    overhead = {item["gateway"]: item for item in json.loads((RESULTS / "overhead_summary.json").read_text())}
+    with (RESULTS / "overhead_comparison.csv").open(newline="") as file:
+        overhead = {item["gateway"]: item for item in csv.DictReader(file)}
     rows = []
-    for key, (label, mem_file) in GATEWAYS.items():
+    for key, label in GATEWAYS.items():
         rows.append(
             Row(
                 label=label,
-                added_p99_ms=overhead[key]["latency_p99_overhead_ms"],
-                peak_rss_mb=_peak_rss_mb(mem_file),
+                added_p99_ms=float(overhead[key]["p99_added_latency_ms"]),
+                peak_rss_mb=float(overhead[key]["peak_rss_mb"]),
                 is_litellm=(key == "litellm-rust"),
             )
         )

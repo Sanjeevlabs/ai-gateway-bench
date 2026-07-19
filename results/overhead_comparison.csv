@@ -1,0 +1,5 @@
+gateway,p99_added_latency_ms,peak_rss_mb
+litellm-rust,0.66,21.848
+litellm-python,257.734,329.454
+bifrost,4.544,199.074
+portkey,2.289,90.44

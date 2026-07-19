@@ -1,0 +1,280 @@
+{
+  "label": "claude_code:http://127.0.0.1:8101/v1/messages",
+  "endpoint": "http://127.0.0.1:8101/v1/messages",
+  "turn_count": 30,
+  "total_wall_time_ms": 751.022,
+  "turns": [
+    {
+      "index": 1,
+      "tool": false,
+      "context_tokens": 256,
+      "latency_ms": 23.926,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 2,
+      "tool": true,
+      "context_tokens": 512,
+      "latency_ms": 22.137,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 3,
+      "tool": false,
+      "context_tokens": 768,
+      "latency_ms": 22.758,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 4,
+      "tool": true,
+      "context_tokens": 1024,
+      "latency_ms": 22.745,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 5,
+      "tool": false,
+      "context_tokens": 1280,
+      "latency_ms": 22.279,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 6,
+      "tool": true,
+      "context_tokens": 1536,
+      "latency_ms": 22.149,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 7,
+      "tool": false,
+      "context_tokens": 2048,
+      "latency_ms": 22.333,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 8,
+      "tool": false,
+      "context_tokens": 2560,
+      "latency_ms": 22.436,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 9,
+      "tool": true,
+      "context_tokens": 3072,
+      "latency_ms": 22.184,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 10,
+      "tool": false,
+      "context_tokens": 3584,
+      "latency_ms": 22.293,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 11,
+      "tool": true,
+      "context_tokens": 4096,
+      "latency_ms": 22.493,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 12,
+      "tool": false,
+      "context_tokens": 4608,
+      "latency_ms": 22.837,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 13,
+      "tool": true,
+      "context_tokens": 5120,
+      "latency_ms": 22.725,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 14,
+      "tool": false,
+      "context_tokens": 5632,
+      "latency_ms": 22.554,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 15,
+      "tool": true,
+      "context_tokens": 6144,
+      "latency_ms": 22.793,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 16,
+      "tool": false,
+      "context_tokens": 6656,
+      "latency_ms": 22.404,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 17,
+      "tool": false,
+      "context_tokens": 7168,
+      "latency_ms": 22.666,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 18,
+      "tool": true,
+      "context_tokens": 7680,
+      "latency_ms": 23.089,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 19,
+      "tool": false,
+      "context_tokens": 8192,
+      "latency_ms": 22.9,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 20,
+      "tool": true,
+      "context_tokens": 8704,
+      "latency_ms": 22.63,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 21,
+      "tool": false,
+      "context_tokens": 9216,
+      "latency_ms": 23.605,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 22,
+      "tool": true,
+      "context_tokens": 10240,
+      "latency_ms": 23.063,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 23,
+      "tool": false,
+      "context_tokens": 11264,
+      "latency_ms": 23.466,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 24,
+      "tool": false,
+      "context_tokens": 12288,
+      "latency_ms": 23.716,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 25,
+      "tool": true,
+      "context_tokens": 13824,
+      "latency_ms": 23.805,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 26,
+      "tool": false,
+      "context_tokens": 15360,
+      "latency_ms": 23.788,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 27,
+      "tool": true,
+      "context_tokens": 16896,
+      "latency_ms": 23.428,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 28,
+      "tool": false,
+      "context_tokens": 18432,
+      "latency_ms": 23.364,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 29,
+      "tool": true,
+      "context_tokens": 19968,
+      "latency_ms": 23.754,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    },
+    {
+      "index": 30,
+      "tool": false,
+      "context_tokens": 21504,
+      "latency_ms": 24.549,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": []
+    }
+  ],
+  "invalid_tool_turns": [],
+  "errors": []
+}

@@ -1,6 +1,6 @@
 {
   "chunk_fidelity": null,
-  "concurrency": 1,
+  "concurrency": 256,
   "count": 5000,
   "endpoint": "http://127.0.0.1:8103/anthropic/v1/messages",
   "errors": [],
@@ -8,9 +8,9 @@
     "p50": null,
     "p99": null
   },
-  "label": "bifrost-messages-c1-corrected",
-  "latency_p50_ms": 22.652,
-  "latency_p99_ms": 25.095,
+  "label": "bifrost-messages-c256",
+  "latency_p50_ms": 89.303,
+  "latency_p99_ms": 5421.344,
   "peak_rss_mb": null,
   "streaming": false,
   "ttft_ms": {

@@ -47,8 +47,16 @@ locust -f scenarios/streaming_turn/locustfile.py --headless -u 16 -r 16 -t 30s \
 python analyze/make_chart.py
 ```
 
-Per-gateway setup (how to start each and point it at the mock) is in `gateways/<name>/README.md`. Measured results land in `results/`; the chart reads `results/overhead_summary.json` and the `results/mem_*.txt` summaries.
+Per-gateway setup (how to start each and point it at the mock) is in `gateways/<name>/README.md`. Measured results land in `results/`; chart source values are committed CSVs under `results/`.
 
 ## Results
 
 The published chart is generated from real runs, not placeholders. Current numbers are a first cut (n=30, single host); methodology and sample size are noted on the chart. Raw per-run data is in `results/`.
+
+## Cost estimate
+
+The request-cost estimate is derived as: estimated USD per 1M requests = ((average CPU fraction × USD per vCPU-hour) + (peak RSS in GB × USD per GB-hour)) divided by sustained throughput, then scaled to 1,000,000 requests. The model uses USD 0.04 per vCPU-hour, USD 0.005 per GB-hour, and a standard 4 vCPU / 16 GB instance. It is an estimate based on local CPU and RSS samples, not a provider invoice.
+
+## Data provenance
+
+Every chart in `analyze/` is generated from a committed CSV in `results/` containing the exact plotted values. Chart scripts must not hardcode numbers.

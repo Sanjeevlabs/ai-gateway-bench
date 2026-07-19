@@ -8,14 +8,13 @@
     "p50": null,
     "p99": null
   },
-  "label": "bifrost-anthropic-c16",
-  "latency_p50_ms": 22.858,
-  "latency_p99_ms": 35.249,
-  "peak_rss_mb": 213.877,
+  "label": "bifrost-messages-c16-corrected",
+  "latency_p50_ms": 22.895,
+  "latency_p99_ms": 32.799,
+  "peak_rss_mb": null,
   "streaming": false,
   "ttft_ms": {
     "p50": null,
     "p99": null
-  },
-  "endpoint_note": "Bifrost v1.6.4 native Anthropic integration is /anthropic/v1/messages; root /v1/messages returned 405."
+  }
 }

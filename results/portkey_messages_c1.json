@@ -8,10 +8,10 @@
     "p50": null,
     "p99": null
   },
-  "label": "portkey-anthropic-c1",
-  "latency_p50_ms": 22.901,
-  "latency_p99_ms": 24.648,
-  "peak_rss_mb": 128.528,
+  "label": "portkey-messages-c1-corrected",
+  "latency_p50_ms": 23.036,
+  "latency_p99_ms": 25.865,
+  "peak_rss_mb": null,
   "streaming": false,
   "ttft_ms": {
     "p50": null,

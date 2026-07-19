@@ -56,14 +56,19 @@ def _failure_response() -> JSONResponse | None:
 # ---------------------------------------------------------------- Anthropic
 
 
-def _anthropic_body() -> dict:
+def _anthropic_body(tool_call: bool = False) -> dict:
     return {
         "id": "msg_gwbench",
         "type": "message",
         "role": "assistant",
         "model": "mock-upstream",
-        "content": [{"type": "text", "text": _WORD * OUTPUT_TOKENS}],
-        "stop_reason": "end_turn",
+        "content": (
+            [{"type": "tool_use", "id": "toolu_gwbench", "name": "edit_file", "input": {
+                "path": "src/main.rs", "content": "fn main() {}"
+            }}]
+            if tool_call else [{"type": "text", "text": _WORD * OUTPUT_TOKENS}]
+        ),
+        "stop_reason": "tool_use" if tool_call else "end_turn",
         "stop_sequence": None,
         "usage": {"input_tokens": 1, "output_tokens": OUTPUT_TOKENS},
     }
@@ -73,7 +78,7 @@ async def _anthropic_stream(tool_call: bool) -> AsyncIterator[bytes]:
     def event(kind: str, payload: dict) -> bytes:
         return f"event: {kind}\ndata: {json.dumps(payload)}\n\n".encode()
 
-    yield event("message_start", {"type": "message_start", "message": _anthropic_body() | {"content": []}})
+    yield event("message_start", {"type": "message_start", "message": _anthropic_body(tool_call) | {"content": []}})
     await asyncio.sleep(TTFT_S)
 
     if tool_call:
@@ -109,7 +114,7 @@ async def messages(request: Request):
     if body.get("stream"):
         return StreamingResponse(_anthropic_stream(_wants_tool_call(body)), media_type="text/event-stream")
     await asyncio.sleep(TTFT_S)
-    return JSONResponse(_anthropic_body())
+    return JSONResponse(_anthropic_body(_wants_tool_call(body)))
 
 
 # ------------------------------------------------------------------- OpenAI

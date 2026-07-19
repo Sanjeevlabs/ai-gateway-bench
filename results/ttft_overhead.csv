@@ -1,0 +1,5 @@
+gateway,available,p50_added_ttft_ms,p99_added_ttft_ms
+litellm-rust,False,,
+litellm-python,True,72.09700000000001,278.54699999999997
+bifrost,True,0.4710000000000001,0.35000000000000053
+portkey,False,,

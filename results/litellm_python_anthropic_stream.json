@@ -1,0 +1,20 @@
+{
+  "chunk_fidelity": 1.0227272727272727,
+  "concurrency": 16,
+  "count": 5000,
+  "endpoint": "http://127.0.0.1:8102/v1/messages",
+  "errors": [],
+  "inter_chunk_ms": {
+    "p50": 5.064,
+    "p99": 17.162
+  },
+  "label": "python-anthropic-stream-new",
+  "latency_p50_ms": 298.698,
+  "latency_p99_ms": 510.78,
+  "peak_rss_mb": null,
+  "streaming": true,
+  "ttft_ms": {
+    "p50": 74.284,
+    "p99": 286.491
+  }
+}
