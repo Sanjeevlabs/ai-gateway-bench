@@ -1,5 +1,5 @@
 model_list:
-  - model_name: claude
+  - model_name: anthropic/mock
     litellm_params:
       model: anthropic/mock
       api_base: http://127.0.0.1:9000

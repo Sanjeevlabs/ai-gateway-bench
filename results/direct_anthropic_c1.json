@@ -1,17 +1,17 @@
 {
   "chunk_fidelity": null,
-  "concurrency": 16,
+  "concurrency": 1,
   "count": 5000,
-  "endpoint": "http://127.0.0.1:8101/v1/messages",
+  "endpoint": "http://127.0.0.1:9000/v1/messages",
   "errors": [],
   "inter_chunk_ms": {
     "p50": null,
     "p99": null
   },
-  "label": "rust-release-c16",
-  "latency_p50_ms": 22.441,
-  "latency_p99_ms": 31.365,
-  "peak_rss_mb": 21.881,
+  "label": "direct-anthropic-c1",
+  "latency_p50_ms": 21.462,
+  "latency_p99_ms": 22.429,
+  "peak_rss_mb": null,
   "streaming": false,
   "ttft_ms": {
     "p50": null,

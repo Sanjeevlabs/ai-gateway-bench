@@ -1,6 +1,6 @@
 {
-  "provider": "openai",
-  "customHost": "http://127.0.0.1:9000/v1",
+  "provider": "anthropic",
+  "customHost": "http://127.0.0.1:9000",
   "apiKey": "dummy",
   "listen": "127.0.0.1:8104"
 }

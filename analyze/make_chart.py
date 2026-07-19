@@ -27,10 +27,10 @@ OTHER_COLOR = "#3a3f4b"
 
 # gateway key in overhead_summary.json -> (display label, memory summary file)
 GATEWAYS = {
-    "litellm-rust": ("LiteLLM (Rust)", "mem_litellm_rust_final.txt"),
-    "bifrost": ("Bifrost", "mem_bifrost.txt"),
-    "portkey": ("Portkey", "mem_portkey_nonstream.txt"),
-    "litellm-python": ("LiteLLM (Python v1)", "mem_litellm_python_final.txt"),
+    "litellm-rust": ("LiteLLM (Rust)", "mem_litellm_rust_release.txt"),
+    "bifrost": ("Bifrost", "mem_bifrost_messages.txt"),
+    "portkey": ("Portkey", "mem_portkey_messages.txt"),
+    "litellm-python": ("LiteLLM (Python v1)", "mem_litellm_python_messages.txt"),
 }
 
 
@@ -64,12 +64,13 @@ def _load() -> list[Row]:
     return rows
 
 
-def _panel(ax, rows: list[Row], values, unit: str, title: str) -> None:
+def _panel(ax, rows: list[Row], values, unit: str, title: str, log: bool = False) -> None:
     order = sorted(range(len(rows)), key=lambda i: values[i], reverse=True)
     labels = [rows[i].label for i in order]
     vals = [values[i] for i in order]
     colors = [LITELLM_COLOR if rows[i].is_litellm else OTHER_COLOR for i in order]
-    bars = ax.barh(range(len(rows)), vals, color=colors, height=0.62)
+    floor = min(vals) / 3.0 if log else 0.0
+    bars = ax.barh(range(len(rows)), vals, left=floor if log else 0, color=colors, height=0.62)
     ax.set_yticks(range(len(rows)))
     ax.set_yticklabels(labels, fontsize=11)
     ax.set_title(title, fontsize=12, fontweight="bold", loc="left", pad=10)
@@ -77,25 +78,31 @@ def _panel(ax, rows: list[Row], values, unit: str, title: str) -> None:
     for spine in ("top", "right", "left"):
         ax.spines[spine].set_visible(False)
     ax.tick_params(left=False)
-    ax.set_xlim(0, max(vals) * 1.18)
+    if log:
+        ax.set_xscale("log")
+        ax.set_xlim(floor, max(vals) * 2.2)
+    else:
+        ax.set_xlim(0, max(vals) * 1.18)
     for bar, value in zip(bars, vals):
-        ax.text(bar.get_width() + max(vals) * 0.02, bar.get_y() + bar.get_height() / 2,
+        x = bar.get_width() + floor if log else bar.get_width()
+        offset = x * 0.12 if log else max(vals) * 0.02
+        ax.text(x + offset, bar.get_y() + bar.get_height() / 2,
                 f"{value:.1f}", va="center", fontsize=10, fontweight="bold", color="#222")
 
 
 def main() -> None:
     rows = _load()
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 3.6))
-    _panel(ax1, rows, [r.added_p99_ms for r in rows], "p99 added latency (ms)",
-           "Gateway overhead — p99 added latency")
+    _panel(ax1, rows, [r.added_p99_ms for r in rows], "p99 added latency (ms, log scale)",
+           "Gateway overhead — p99 added latency", log=True)
     _panel(ax2, rows, [r.peak_rss_mb for r in rows], "peak RSS (MB)",
            "Deploy cost — peak memory")
     fig.suptitle("AIGatewayBench: overhead vs a local deterministic mock", fontsize=14,
                  fontweight="bold", x=0.02, ha="left")
     fig.text(0.02, -0.02,
-             "First-cut, n=30 per gateway on one host. Overhead = gateway p99 - direct-to-mock p99 on the same "
-             "endpoint. LiteLLM Rust on /v1/messages; others on /v1/chat/completions. Portkey measured "
-             "non-streaming (streaming errored on v1.15.2). Not a large-sample tail result yet.",
+             "n=5000 per endpoint on one host. Overhead = gateway p99 - direct-to-mock p99 on the same "
+             "endpoint. All requests use the Anthropic Messages body; Bifrost uses its native "
+             "/anthropic/v1/messages integration prefix.",
              fontsize=7, color="#888", ha="left")
     fig.tight_layout(rect=(0, 0.04, 1, 0.93))
     fig.savefig(OUT, dpi=150, bbox_inches="tight", facecolor="white")

@@ -1,6 +1,6 @@
 model_list:
-  - model_name: mock
+  - model_name: anthropic/mock
     litellm_params:
-      model: openai/mock
-      api_base: http://127.0.0.1:9000/v1
+      model: anthropic/mock
+      api_base: http://127.0.0.1:9000
       api_key: dummy

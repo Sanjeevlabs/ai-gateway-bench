@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import statistics
 import sys
+import threading
 import time
 from pathlib import Path
 
@@ -29,7 +31,10 @@ def main() -> None:
     parser.add_argument("--header", action="append", default=[])
     parser.add_argument("--pid", type=int)
     parser.add_argument("--expected-chunks", type=int)
+    parser.add_argument("--concurrency", type=int, default=1)
     args = parser.parse_args()
+    if args.concurrency < 1:
+        parser.error("--concurrency must be positive")
 
     body_factory = anthropic_body if args.endpoint == "anthropic" else openai_body
     headers = {"Authorization": f"Bearer {args.api_key}"} if args.api_key else {}
@@ -45,36 +50,53 @@ def main() -> None:
     errors: list[str] = []
     rss: list[int] = []
     process = psutil.Process(args.pid) if args.pid else None
+    thread_state = threading.local()
 
-    with httpx.Client(timeout=180) as client:
-        for _ in range(args.count):
-            started = time.perf_counter()
-            if args.stream:
-                metrics = stream_request(
-                    client,
-                    args.url,
-                    body_factory(model=args.model),
-                    name=args.label,
-                    headers=headers,
-                )
-                elapsed = (time.perf_counter() - started) * 1000
+    def request_once() -> tuple[float, object | None, str | None]:
+        started = time.perf_counter()
+        client = getattr(thread_state, "client", None)
+        if client is None:
+            client = httpx.Client(timeout=180)
+            thread_state.client = client
+        if args.stream:
+            metrics = stream_request(
+                client,
+                args.url,
+                body_factory(model=args.model),
+                name=args.label,
+                headers=headers,
+            )
+            error = (
+                metrics.error or f"HTTP {metrics.status_code}"
+                if metrics.status_code >= 400 or metrics.error
+                else None
+            )
+            return (time.perf_counter() - started) * 1000, metrics, error
+        response = client.post(
+                args.url,
+                json=body_factory(model=args.model, stream=False),
+                headers=headers,
+            )
+        error = (
+            f"HTTP {response.status_code}: {response.text[:200]}"
+            if response.is_error
+            else None
+        )
+        return (time.perf_counter() - started) * 1000, None, error
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=args.concurrency) as executor:
+        for elapsed, metrics, error in executor.map(
+            lambda _: request_once(), range(args.count)
+        ):
+            latencies.append(elapsed)
+            if metrics is not None:
                 if metrics.ttft_ms is not None:
                     ttft.append(metrics.ttft_ms)
                 gaps.extend(metrics.inter_chunk_ms)
                 if args.expected_chunks:
                     fidelity.append(metrics.chunk_count / args.expected_chunks)
-                if metrics.status_code >= 400 or metrics.error:
-                    errors.append(metrics.error or f"HTTP {metrics.status_code}")
-            else:
-                response = client.post(
-                    args.url,
-                    json=body_factory(model=args.model, stream=False),
-                    headers=headers,
-                )
-                elapsed = (time.perf_counter() - started) * 1000
-                if response.is_error:
-                    errors.append(f"HTTP {response.status_code}: {response.text[:200]}")
-            latencies.append(elapsed)
+            if error:
+                errors.append(error)
             if process:
                 try:
                     rss.append(process.memory_info().rss)
@@ -85,6 +107,7 @@ def main() -> None:
         "label": args.label,
         "endpoint": args.url,
         "count": args.count,
+        "concurrency": args.concurrency,
         "streaming": args.stream,
         "latency_p50_ms": percentile(latencies, 0.50),
         "latency_p99_ms": percentile(latencies, 0.99),
