@@ -30,6 +30,7 @@ app = FastAPI()
 TTFT_S = float(os.environ.get("MOCK_TTFT_MS", "20")) / 1000.0
 ITL_S = float(os.environ.get("MOCK_ITL_MS", "5")) / 1000.0
 OUTPUT_TOKENS = int(os.environ.get("MOCK_OUTPUT_TOKENS", "40"))
+FAIL_STATUS = int(os.environ.get("MOCK_FAIL_STATUS", "0"))
 
 _WORD = "token "
 
@@ -41,6 +42,15 @@ async def health() -> JSONResponse:
 
 def _wants_tool_call(body: dict) -> bool:
     return bool(body.get("tools")) or body.get("_gwbench_tool") is True
+
+
+def _failure_response() -> JSONResponse | None:
+    if 400 <= FAIL_STATUS <= 599:
+        return JSONResponse(
+            {"error": {"message": "deterministic mock failure", "status": FAIL_STATUS}},
+            status_code=FAIL_STATUS,
+        )
+    return None
 
 
 # ---------------------------------------------------------------- Anthropic
@@ -94,6 +104,8 @@ async def _anthropic_stream(tool_call: bool) -> AsyncIterator[bytes]:
 @app.post("/v1/messages")
 async def messages(request: Request):
     body = await request.json()
+    if failure := _failure_response():
+        return failure
     if body.get("stream"):
         return StreamingResponse(_anthropic_stream(_wants_tool_call(body)), media_type="text/event-stream")
     await asyncio.sleep(TTFT_S)
@@ -138,6 +150,8 @@ async def _openai_stream() -> AsyncIterator[bytes]:
 @app.post("/v1/chat/completions")
 async def chat_completions(request: Request):
     body = await request.json()
+    if failure := _failure_response():
+        return failure
     if body.get("stream"):
         return StreamingResponse(_openai_stream(), media_type="text/event-stream")
     await asyncio.sleep(TTFT_S)

@@ -1,0 +1,5 @@
+Type,Name,Request Count,Failure Count,Median Response Time,Average Response Time,Min Response Time,Max Response Time,Average Content Size,Requests/s,Failures/s,50%,66%,75%,80%,90%,95%,98%,99%,99.9%,99.99%,100%
+STREAM,tool_call_loop/correctness,17,0,0,0.0,0,0,0.0,4.291236210502445,0.0,0,0,0,0,0,0,0,0,0,0,0
+STREAM,tool_call_loop/inter_chunk,153,0,5,5.111434973888904,0.019982000594609417,19.986882000011974,0.0,38.62112589452201,0.0,5,5,5,5,20,20,20,20,20,20,20
+STREAM,tool_call_loop/ttft,17,0,2,2.3002378823494998,1.9592849994296557,4.20715900054347,0.0,4.291236210502445,0.0,2,2,2,2,2,4,4,4,4,4,4
+,Aggregated,187,0,5,4.391195695213603,0,19.986882000011974,0.0,47.2035983155269,0.0,5,5,5,5,5,20,20,20,20,20,20

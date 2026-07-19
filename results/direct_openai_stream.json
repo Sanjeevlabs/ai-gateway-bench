@@ -1,0 +1,19 @@
+{
+  "chunk_fidelity": 1.0,
+  "count": 30,
+  "endpoint": "http://127.0.0.1:9000/v1/chat/completions",
+  "errors": [],
+  "inter_chunk_ms": {
+    "p50": 5.194,
+    "p99": 5.489
+  },
+  "label": "direct-openai-stream",
+  "latency_p50_ms": 229.169,
+  "latency_p99_ms": 231.018,
+  "peak_rss_mb": 46.068,
+  "streaming": true,
+  "ttft_ms": {
+    "p50": 21.62,
+    "p99": 22.043
+  }
+}

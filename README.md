@@ -1,133 +1,54 @@
-# GatewayBench
+# AIGatewayBench
 
-A reproducible benchmark for **AI-gateway overhead**: the latency, throughput ceiling, and resource cost a gateway adds *on top of* the upstream LLM.
+A reproducible benchmark for **AI-gateway overhead**: the latency, memory, and resource cost a gateway adds on top of the upstream LLM, measured through the lens of a coding agent.
 
-CursorBench measures model *quality*. The right question for a gateway is not quality but overhead, and specifically the overhead that a coding agent feels on every turn: how much longer until the first token, how evenly the stream flows, how tool calls behave, and how the whole thing holds up under concurrency. GatewayBench measures that, and it measures it the same way for every gateway so the numbers are comparable.
-
-Gateways compared: **LiteLLM (Rust)**, **LiteLLM (Python v1)**, **Portkey**, and **Bifrost**.
-
-![GatewayBench overhead comparison](analyze/overhead_comparison.png)
-
-> The chart above uses **illustrative placeholder data** to show the design. It is regenerated from real `results/*.jsonl` once the harness has run; see [Generating the chart](#generating-the-chart).
-
-## The core idea: isolate the gateway from the provider
-
-Real provider latency is hundreds of milliseconds to several seconds with large variance. Gateway overhead is microseconds to low-single-digit milliseconds. Benchmarking against a live provider drowns the signal in provider noise and nothing reproduces.
-
-So every self-hostable gateway points at a **local mock upstream** we control (`crates/mock-upstream`): an OpenAI-compatible server with deterministic, configurable behavior
-
-- fixed, configurable time-to-first-byte and inter-token delay, so streaming is realistic without real-world variance
-- configurable request size (prompt tokens) and response size (completion tokens)
-- correct SSE streaming for `stream: true`, a normal JSON body otherwise
-- a valid `usage` block, so spend-tracking and logging code paths actually run
-
-Overhead is then
+Every gateway points at the same local deterministic mock, so provider latency and network noise are removed and what's left is the gateway's own overhead:
 
 ```
 overhead = latency(client -> gateway -> mock) - latency(client -> mock directly)
 ```
 
-measured through the same client over the same loopback. The direct-to-mock path is the zero point.
+Gateways compared: LiteLLM (Rust), LiteLLM (Python v1), Portkey, Bifrost.
 
-## Why Rust
+![AIGatewayBench overhead comparison](analyze/overhead_comparison.png)
 
-The mock and the load driver must never be the bottleneck. A Python mock or closed-loop Python driver caps throughput well below where these gateways saturate, and it cannot measure tail latency honestly. The harness is a Rust (tokio) workspace so that
+## What it tests
 
-- the mock and driver stay far above the gateways' saturation point
-- latency is captured losslessly with `hdrhistogram`
-- the driver is **open-loop** (constant arrival rate), which avoids coordinated omission and keeps the p99/p99.9 tail honest
-- runs are deterministic: fixed seeds, fixed payloads, a discarded warmup window
+Each scenario is one folder under `scenarios/`. Load/streaming scenarios use Locust; the rest are plain Python scripts.
 
-Only the harness is Rust. The gateways run as their real selves: LiteLLM Rust, LiteLLM Python v1, Bifrost (Go), and Portkey (the OSS JS gateway).
+| Metric | Why it matters for agents | Folder |
+|---|---|---|
+| TTFT + inter-chunk latency & jitter | An agent streams every turn; buffering or stutter is felt directly | `scenarios/streaming_turn` |
+| Tool-call latency + argument-delta reassembly | Tool calls are the heavy path; reordered/mangled args break an edit | `scenarios/tool_call_loop` |
+| Overhead vs prompt size (1k/10k/100k) | Agents paste whole files; parse/serialize cost grows with context | `scenarios/large_context` |
+| p99 inter-chunk latency + chunk fidelity under load | The moat metric: does the tail stay flat and 1:1 as concurrency rises | `scenarios/concurrent_agents` |
+| Edge rejection of invalid/rotating keys | An abusive key flood should be rejected cheaply, not hit the upstream | `scenarios/security_key_flood` |
+| Failover / error-path overhead | Cost of the retry/fallback path when the upstream returns 429/500 | `scenarios/failover_overhead` |
+| Head-of-line blocking | Does one 100k-token request stall small streaming turns | `scenarios/head_of_line` |
+| Peak RSS, idle RSS, memory growth | How cheap to deploy, and whether it drifts toward OOM under load | `tools/mem_sampler.py` (run alongside any scenario) |
 
-## Metrics
+See [`docs/WHAT_THE_BENCH_TESTS.md`](docs/WHAT_THE_BENCH_TESTS.md) for the full rationale and the moat-metric argument.
 
-Coding agents stream, call tools, and send large contexts, so the streaming and payload metrics carry the most weight.
-
-Streaming, what an agent feels every turn
-
-- **TTFT overhead** - added time to the first chunk. The single most perceived metric
-- **Inter-chunk latency (ITL) and jitter** - added gap between SSE chunks (p50/p99/max and standard deviation). This exposes gateways that buffer or re-chunk the stream; some coalesce the whole response and re-emit it, which is catastrophic for an agent
-- **Chunk fidelity** - whether chunks pass through 1:1 or get coalesced (chunk-count ratio versus the mock)
-- **Time-to-last-token** - added total stream duration
-
-Tool calls, core to coding agents
-
-- **Tool-call TTFT and total overhead** versus plain text; streamed `tool_calls` argument deltas are a heavier transform path than text
-- **Tool-call correctness under streaming** - whether the gateway reassembles partial JSON argument deltas without corrupting or reordering them
-
-Payload scaling, agents send whole files
-
-- **Large-prompt overhead** - overhead as a function of input size (1k / 10k / 100k tokens), where JSON parse and serialize cost dominates
-
-Load and cost
-
-- **Throughput ceiling** - max sustained req/s before the latency knee or errors
-- **Tail latency** - p99 / p99.9 added latency under concurrency
-- **Resource footprint** - peak RSS and CPU at a fixed req/s, from which we derive cost per 1M requests
-
-## Fairness
-
-Since LiteLLM publishes this, transparency is the whole point. Every gateway config, image, and pinned version lives in `gateways/` and is meant to be challenged. Rules
-
-- all four gateways run on the **same single machine** so the numbers are directly comparable; a run split across different hosts would not be
-- each gateway runs in its **recommended production config**, not a strawman, and we run two configs per gateway: *bare passthrough* (no logging, DB, cache, or rate limit) to isolate pure proxy cost, and *realistic prod* (key auth plus a logging or spend callback on) to match what people actually run
-- equal resources for every gateway (same container CPU and memory limits), so a result is never "who got more cores"
-- load driver, gateway, and mock run on separate pinned cores so the driver never steals the gateway's CPU
-- fixed seeds and payloads, a discarded warmup window, multiple runs with median-of-runs and variance reported
-
-Portkey is benchmarked as the open-source self-hostable gateway, not the SaaS.
-
-## Layout
-
-Each folder under `tests/` is one self-contained test: its own crate, its own driver invocation, its own assertion.
-
-```
-gatewaybench/                 cargo workspace
-  crates/
-    gwbench-core/             shared types: Scenario, tagged-union Outcome,
-                              hdrhistogram-backed LatencySummary, ResourceSample,
-                              JSONL BenchResult writer
-    mock-upstream/            axum mock: configurable TTFT, inter-token gap, size, SSE, usage
-    driver/                   open-loop (constant-arrival-rate) load engine
-  tests/                      each subdir = ONE test (bin + README describing it)
-    ttft/                     added time-to-first-chunk
-    inter-chunk-latency/      added inter-chunk gap + jitter; buffering detection
-    chunk-fidelity/           1:1 passthrough vs coalescing
-    tool-call-latency/        tool-call TTFT + streamed-arg reassembly correctness
-    large-prompt/             overhead vs input size (1k/10k/100k tokens)
-    throughput/               RPS ceiling + CPU/RSS cost per 1M requests
-    tail-latency/             p99/p99.9 added latency under concurrency
-  gateways/                   per-gateway configs (bare + prod), pinned versions
-    litellm-rust/  litellm-python/  bifrost/  portkey/
-  xtask/                      `cargo xtask bench` sweeps the matrix -> results/*.jsonl
-  analyze/                    chart generation for RESULTS.md
-```
-
-## Quickstart
+## Running it
 
 ```bash
-# build the workspace
-cargo build --workspace --release
+python -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt
 
-# run the mock upstream (defaults to :8080)
-GWBENCH_MOCK_PORT=8080 cargo run --release -p mock-upstream
+# 1. start the deterministic mock upstream
+uvicorn mock.app:app --port 9000
 
-# run a single test against a target (e.g. a gateway on :4000, or the mock directly for the baseline)
-cargo run --release -p ttft
+# 2. start a gateway pointed at the mock (see gateways/<name>/README.md)
 
-# sweep the full matrix and write results/*.jsonl
-cargo xtask bench
+# 3. run a scenario, e.g. a Locust load test
+locust -f scenarios/streaming_turn/locustfile.py --headless -u 16 -r 16 -t 30s \
+  --host http://127.0.0.1:<gateway-port>
+
+# 4. regenerate the chart from results/
+python analyze/make_chart.py
 ```
 
-## Generating the chart
+Per-gateway setup (how to start each and point it at the mock) is in `gateways/<name>/README.md`. Measured results land in `results/`; the chart reads `results/overhead_summary.json` and the `results/mem_*.txt` summaries.
 
-The overhead comparison chart is produced from the benchmark results by `analyze/make_hero_charts.py`. Point `_DATA` at real rows from `results/*.jsonl` and regenerate
+## Results
 
-```bash
-python analyze/make_hero_charts.py
-```
-
-## Status
-
-Scaffold: the workspace compiles, the domain types are real, and the mock serves a valid non-streaming response. The measurement internals (open-loop driver, streaming mock knobs, cgroup resource sampling, per-test assertions, the `xtask` matrix sweep) land in follow-ups. The charts show placeholder data until then.
+The published chart is generated from real runs, not placeholders. Current numbers are a first cut (n=30, single host); methodology and sample size are noted on the chart. Raw per-run data is in `results/`.

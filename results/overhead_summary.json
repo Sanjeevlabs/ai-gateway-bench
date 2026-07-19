@@ -1,0 +1,38 @@
+[
+  {
+    "gateway": "litellm-rust",
+    "endpoint": "http://127.0.0.1:8101/v1/messages",
+    "baseline_endpoint": "http://127.0.0.1:9000/v1/messages",
+    "latency_p50_overhead_ms": 1.052,
+    "latency_p99_overhead_ms": 2.214,
+    "gateway_result": "litellm_rust.json",
+    "baseline_result": "direct_anthropic.json"
+  },
+  {
+    "gateway": "litellm-python",
+    "endpoint": "http://127.0.0.1:8102/v1/chat/completions",
+    "baseline_endpoint": "http://127.0.0.1:9000/v1/chat/completions",
+    "latency_p50_overhead_ms": 7.126,
+    "latency_p99_overhead_ms": 9.986,
+    "gateway_result": "litellm_python.json",
+    "baseline_result": "direct_openai_stream.json"
+  },
+  {
+    "gateway": "bifrost",
+    "endpoint": "http://127.0.0.1:8103/v1/chat/completions",
+    "baseline_endpoint": "http://127.0.0.1:9000/v1/chat/completions",
+    "latency_p50_overhead_ms": 1.738,
+    "latency_p99_overhead_ms": 1.601,
+    "gateway_result": "bifrost.json",
+    "baseline_result": "direct_openai_stream.json"
+  },
+  {
+    "gateway": "portkey",
+    "endpoint": "http://127.0.0.1:8787/v1/chat/completions",
+    "baseline_endpoint": "http://127.0.0.1:9000/v1/chat/completions",
+    "latency_p50_overhead_ms": 1.667,
+    "latency_p99_overhead_ms": 3.086,
+    "gateway_result": "portkey_nonstream.json",
+    "baseline_result": "direct_openai_nonstream.json"
+  }
+]

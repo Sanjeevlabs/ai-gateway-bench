@@ -1,0 +1,3 @@
+idle_rss_mb=95.785
+peak_rss_mb=96.866
+growth_slope_bytes_per_second=72572.677

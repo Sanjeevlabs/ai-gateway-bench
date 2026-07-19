@@ -1,0 +1,19 @@
+{
+  "chunk_fidelity": null,
+  "count": 30,
+  "endpoint": "http://127.0.0.1:9000/v1/messages",
+  "errors": [],
+  "inter_chunk_ms": {
+    "p50": null,
+    "p99": null
+  },
+  "label": "direct-anthropic",
+  "latency_p50_ms": 21.453,
+  "latency_p99_ms": 22.75,
+  "peak_rss_mb": 46.068,
+  "streaming": false,
+  "ttft_ms": {
+    "p50": null,
+    "p99": null
+  }
+}
