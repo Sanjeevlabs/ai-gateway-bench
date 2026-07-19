@@ -37,6 +37,9 @@ python -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt
 # 1. start the deterministic mock upstream
 uvicorn mock.app:app --port 9000
 
+# Rust high-concurrency mock alternative
+cargo run --release -p mock-upstream
+
 # 2. start a gateway pointed at the mock (see gateways/<name>/README.md)
 
 # 3. run a scenario, e.g. a Locust load test

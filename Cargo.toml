@@ -1,0 +1,3 @@
+[workspace]
+members = ["crates/mock-upstream"]
+resolver = "2"
