@@ -12,6 +12,12 @@ RESULTS = Path(__file__).resolve().parent.parent / "results"
 OUT = Path(__file__).resolve().parent
 LITELLM_COLOR = "#00b34a"
 OTHER_COLOR = "#3a3f4b"
+SERIES_STYLES = {
+    "litellm-rust": ("#00b34a", "o", "-"),
+    "litellm-python": ("#0072B2", "s", "--"),
+    "bifrost": ("#D55E00", "^", "-."),
+    "portkey": ("#6A3D9A", "D", ":"),
+}
 GATEWAYS = {
     "litellm-rust": "LiteLLM (Rust)",
     "litellm-python": "LiteLLM (Python v1)",
@@ -58,9 +64,12 @@ def concurrency_chart() -> None:
         ax.plot(
             [int(row["concurrency"]) for row in rows],
             [float(row["p99_added_latency_ms"]) for row in rows],
-            marker="o",
             label=label,
-            color=LITELLM_COLOR if key == "litellm-rust" else OTHER_COLOR,
+            color=SERIES_STYLES[key][0],
+            marker=SERIES_STYLES[key][1],
+            linestyle=SERIES_STYLES[key][2],
+            linewidth=1.8,
+            markersize=6,
         )
     ax.set_xscale("log", base=2)
     ax.set_yscale("symlog", linthresh=1)
@@ -69,7 +78,7 @@ def concurrency_chart() -> None:
     ax.set_title("Tail overhead versus concurrency", loc="left", fontweight="bold")
     ax.grid(True, which="both", alpha=0.2)
     ax.legend(frameon=False)
-    fig.text(0.01, 0.01, "n=5000 per point; Anthropic /v1/messages body; direct baseline at each concurrency. Concurrency is capped where the direct mock p99 remains within roughly 2x its single-client floor. Signed differences use a symmetric log axis.", fontsize=7, color="#777")
+    fig.text(0.01, 0.01, "n=2000 per point; persistent Rust reqwest driver and fast Rust mock; direct baseline measured at each concurrency. Retained through concurrency 64 because direct p99 stayed within 2x its single-client floor; 256 was dropped. Signed differences are measurements, not speedups.", fontsize=7, color="#777")
     fig.tight_layout(rect=(0, 0.05, 1, 1))
     fig.savefig(OUT / "latency_vs_concurrency.png", dpi=160, bbox_inches="tight")
 
@@ -103,11 +112,30 @@ def ttft_chart() -> None:
     ax.grid(axis="y", alpha=0.2)
     for index, key in enumerate(keys):
         if data[key]["available"].lower() != "true":
-            reason = "no SSE streaming yet\n502 route" if key == "litellm-rust" else "no SSE streaming yet\nOSS 500"
+            reason = "no SSE streaming yet\nroute returns 502" if key == "litellm-rust" else "no SSE streaming yet\nOSS returns 500"
             ax.text(index, 0, reason, ha="center", va="bottom", fontsize=8)
-    fig.text(0.01, 0.01, "n=5000, concurrency 16; direct-to-mock /v1/messages baseline. Rust and Portkey streaming unavailable, shown as limitations.", fontsize=7, color="#777")
+    fig.text(0.01, 0.01, "n=100, concurrency 16; fast Rust mock baseline. Rust and Portkey are unavailable because their streaming routes return 502 and 500. Signed differences reflect measurement noise, not speedups.", fontsize=7, color="#777")
     fig.tight_layout(rect=(0, 0.05, 1, 1))
     fig.savefig(OUT / "ttft_overhead.png", dpi=160, bbox_inches="tight")
+
+
+def rps_chart() -> None:
+    data = _csv("rps_per_dollar.csv")
+    data.sort(key=lambda row: float(row["rps_per_dollar"]))
+    labels = [GATEWAYS[row["gateway"]] for row in data]
+    values = [float(row["rps_per_dollar"]) for row in data]
+    colors = [LITELLM_COLOR if row["gateway"] == "litellm-rust" else OTHER_COLOR for row in data]
+    fig, ax = plt.subplots(figsize=(8, 4.5))
+    bars = ax.bar(labels, values, color=colors)
+    ax.set_ylabel("Estimated sustained RPS per USD/hour")
+    ax.set_title("Estimated throughput efficiency", loc="left", fontweight="bold")
+    ax.tick_params(axis="x", rotation=20)
+    ax.grid(axis="y", alpha=0.2)
+    for bar, value in zip(bars, values):
+        ax.text(bar.get_x() + bar.get_width() / 2, value, f"{value:,.0f}", ha="center", va="bottom", fontsize=8)
+    fig.text(0.01, 0.01, "Estimate only. Ceiling is the highest retained baseline-controlled point with zero errors and p99 under 1,000 ms. Hourly cost uses measured CPU and peak RSS with 4 vCPU at USD 0.04/hour and 16 GB at USD 0.005/GB-hour.", fontsize=7, color="#777")
+    fig.tight_layout(rect=(0, 0.05, 1, 1))
+    fig.savefig(OUT / "rps_per_dollar.png", dpi=160, bbox_inches="tight")
 
 
 if __name__ == "__main__":
@@ -115,3 +143,4 @@ if __name__ == "__main__":
     concurrency_chart()
     cost_chart()
     ttft_chart()
+    rps_chart()

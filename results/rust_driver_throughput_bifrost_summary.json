@@ -1,0 +1,10 @@
+{
+  "gateway": "bifrost",
+  "concurrency": 64,
+  "elapsed_s": 0.8064718940004241,
+  "sustained_rps": 2744.1197314760298,
+  "p99_ms": 32.211698,
+  "errors": 0,
+  "avg_cpu_percent": 105.4375,
+  "peak_rss_gb": 0.242614272
+}

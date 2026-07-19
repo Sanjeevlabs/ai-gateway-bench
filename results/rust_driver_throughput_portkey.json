@@ -1,0 +1,11 @@
+{
+  "concurrency": 64,
+  "count": 2000,
+  "elapsed_s": 1.8256039400000001,
+  "errors": [],
+  "label": "rust-driver-throughput-portkey",
+  "latency_p50_ms": 53.262124,
+  "latency_p99_ms": 299.743703,
+  "rps": 1095.52787227223,
+  "url": "http://127.0.0.1:8787/v1/messages"
+}

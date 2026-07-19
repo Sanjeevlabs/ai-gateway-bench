@@ -1,0 +1,385 @@
+{
+  "label": "claude_code:http://127.0.0.1:8787/v1/messages",
+  "endpoint": "http://127.0.0.1:8787/v1/messages",
+  "turn_count": 30,
+  "total_wall_time_ms": 161.338,
+  "turns": [
+    {
+      "index": 1,
+      "tool": false,
+      "context_tokens": 256,
+      "latency_ms": 5.367,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 2,
+      "tool": true,
+      "context_tokens": 512,
+      "latency_ms": 3.837,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 3,
+      "tool": false,
+      "context_tokens": 768,
+      "latency_ms": 2.766,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 4,
+      "tool": true,
+      "context_tokens": 1024,
+      "latency_ms": 2.812,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 5,
+      "tool": false,
+      "context_tokens": 1280,
+      "latency_ms": 4.163,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 6,
+      "tool": true,
+      "context_tokens": 1536,
+      "latency_ms": 2.949,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 7,
+      "tool": false,
+      "context_tokens": 2048,
+      "latency_ms": 2.927,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 8,
+      "tool": false,
+      "context_tokens": 2560,
+      "latency_ms": 2.56,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 9,
+      "tool": true,
+      "context_tokens": 3072,
+      "latency_ms": 2.553,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 10,
+      "tool": false,
+      "context_tokens": 3584,
+      "latency_ms": 2.845,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 11,
+      "tool": true,
+      "context_tokens": 4096,
+      "latency_ms": 2.943,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 12,
+      "tool": false,
+      "context_tokens": 4608,
+      "latency_ms": 2.475,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 13,
+      "tool": true,
+      "context_tokens": 5120,
+      "latency_ms": 3.721,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 14,
+      "tool": false,
+      "context_tokens": 5632,
+      "latency_ms": 3.242,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 15,
+      "tool": true,
+      "context_tokens": 6144,
+      "latency_ms": 3.854,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 16,
+      "tool": false,
+      "context_tokens": 6656,
+      "latency_ms": 3.678,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 17,
+      "tool": false,
+      "context_tokens": 7168,
+      "latency_ms": 3.986,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 18,
+      "tool": true,
+      "context_tokens": 7680,
+      "latency_ms": 3.861,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 19,
+      "tool": false,
+      "context_tokens": 8192,
+      "latency_ms": 3.17,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 20,
+      "tool": true,
+      "context_tokens": 8704,
+      "latency_ms": 3.559,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 21,
+      "tool": false,
+      "context_tokens": 9216,
+      "latency_ms": 3.375,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 22,
+      "tool": true,
+      "context_tokens": 10240,
+      "latency_ms": 3.954,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 23,
+      "tool": false,
+      "context_tokens": 11264,
+      "latency_ms": 3.399,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 24,
+      "tool": false,
+      "context_tokens": 12288,
+      "latency_ms": 4.187,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 25,
+      "tool": true,
+      "context_tokens": 13824,
+      "latency_ms": 3.474,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 26,
+      "tool": false,
+      "context_tokens": 15360,
+      "latency_ms": 3.758,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 27,
+      "tool": true,
+      "context_tokens": 16896,
+      "latency_ms": 6.79,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 28,
+      "tool": false,
+      "context_tokens": 18432,
+      "latency_ms": 3.954,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 29,
+      "tool": true,
+      "context_tokens": 19968,
+      "latency_ms": 4.361,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    },
+    {
+      "index": 30,
+      "tool": false,
+      "context_tokens": 21504,
+      "latency_ms": 4.714,
+      "ttft_ms": null,
+      "inter_chunk_p99_ms": null,
+      "errors": [
+        "HTTP 500"
+      ]
+    }
+  ],
+  "invalid_tool_turns": [
+    2,
+    4,
+    6,
+    9,
+    11,
+    13,
+    15,
+    18,
+    20,
+    22,
+    25,
+    27,
+    29
+  ],
+  "errors": [
+    "turn 1: HTTP 500",
+    "turn 2: HTTP 500",
+    "turn 3: HTTP 500",
+    "turn 4: HTTP 500",
+    "turn 5: HTTP 500",
+    "turn 6: HTTP 500",
+    "turn 7: HTTP 500",
+    "turn 8: HTTP 500",
+    "turn 9: HTTP 500",
+    "turn 10: HTTP 500",
+    "turn 11: HTTP 500",
+    "turn 12: HTTP 500",
+    "turn 13: HTTP 500",
+    "turn 14: HTTP 500",
+    "turn 15: HTTP 500",
+    "turn 16: HTTP 500",
+    "turn 17: HTTP 500",
+    "turn 18: HTTP 500",
+    "turn 19: HTTP 500",
+    "turn 20: HTTP 500",
+    "turn 21: HTTP 500",
+    "turn 22: HTTP 500",
+    "turn 23: HTTP 500",
+    "turn 24: HTTP 500",
+    "turn 25: HTTP 500",
+    "turn 26: HTTP 500",
+    "turn 27: HTTP 500",
+    "turn 28: HTTP 500",
+    "turn 29: HTTP 500",
+    "turn 30: HTTP 500"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "criterion": "highest measured concurrency with controlled direct baseline, zero errors, and p99 under 1000 ms",
+  "driver": "Rust reqwest persistent client",
+  "rows": [
+    {
+      "gateway": "litellm-rust",
+      "sustained_rps": 2814.3531702101873,
+      "estimated_hourly_cost_usd": 0.009915516800000001,
+      "rps_per_dollar": 283833.230982997,
+      "ceiling_concurrency": 64,
+      "p99_ms": 26.94463,
+      "errors": 0
+    },
+    {
+      "gateway": "litellm-python",
+      "sustained_rps": 177.47657272613287,
+      "estimated_hourly_cost_usd": 0.04130865282285716,
+      "rps_per_dollar": 4296.353441667564,
+      "ceiling_concurrency": 64,
+      "p99_ms": 557.355887,
+      "errors": 0
+    },
+    {
+      "gateway": "bifrost",
+      "sustained_rps": 2744.1197314760298,
+      "estimated_hourly_cost_usd": 0.04338807136,
+      "rps_per_dollar": 63245.948608950326,
+      "ceiling_concurrency": 64,
+      "p99_ms": 32.211698,
+      "errors": 0
+    },
+    {
+      "gateway": "portkey",
+      "sustained_rps": 1095.52787227223,
+      "estimated_hourly_cost_usd": 0.060983514812631576,
+      "rps_per_dollar": 17964.328157177853,
+      "ceiling_concurrency": 64,
+      "p99_ms": 299.743703,
+      "errors": 0
+    }
+  ]
+}

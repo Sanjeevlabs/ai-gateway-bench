@@ -1,0 +1,11 @@
+{
+  "concurrency": 64,
+  "count": 2000,
+  "elapsed_s": 0.710642865,
+  "errors": [],
+  "label": "rust-driver-throughput-litellm-rust",
+  "latency_p50_ms": 22.058041,
+  "latency_p99_ms": 26.94463,
+  "rps": 2814.3531702101873,
+  "url": "http://127.0.0.1:8101/v1/messages"
+}

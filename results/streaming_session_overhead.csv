@@ -1,0 +1,9 @@
+profile,gateway,direct_total_ms,gateway_total_ms,added_ms,error_count,invalid_tool_turns
+claude_code,litellm-rust,5311.285,5341.618,30.333,0,0
+claude_code,litellm-python,5311.285,5570.472,259.187,0,0
+claude_code,bifrost,5311.285,5408.683,97.398,0,0
+claude_code,portkey,5311.285,161.338,,30,13
+codex,litellm-rust,3803.57,3825.222,21.652,0,0
+codex,litellm-python,3803.57,4067.108,263.538,0,0
+codex,bifrost,3803.57,3870.79,67.22,0,0
+codex,portkey,3803.57,167.968,,30,20

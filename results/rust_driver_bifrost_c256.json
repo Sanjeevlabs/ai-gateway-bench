@@ -1,0 +1,11 @@
+{
+  "concurrency": 256,
+  "count": 2000,
+  "elapsed_s": 0.24195548,
+  "errors": [],
+  "label": "trustworthy-rust-driver-bifrost-c256",
+  "latency_p50_ms": 23.152759,
+  "latency_p99_ms": 71.75435800000001,
+  "rps": 8265.983477621585,
+  "url": "http://127.0.0.1:8103/anthropic/v1/messages"
+}

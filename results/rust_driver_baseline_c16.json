@@ -1,0 +1,11 @@
+{
+  "concurrency": 16,
+  "count": 2000,
+  "elapsed_s": 2.718861515,
+  "errors": [],
+  "label": "trustworthy-rust-driver-baseline-c16",
+  "latency_p50_ms": 21.798998,
+  "latency_p99_ms": 22.673467,
+  "rps": 735.6020117118765,
+  "url": "http://127.0.0.1:9000/v1/messages"
+}

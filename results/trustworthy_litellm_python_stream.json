@@ -1,0 +1,20 @@
+{
+  "chunk_fidelity": 5.625,
+  "concurrency": 16,
+  "count": 100,
+  "endpoint": "http://127.0.0.1:8102/v1/messages",
+  "errors": [],
+  "inter_chunk_ms": {
+    "p50": 6.093,
+    "p99": 21.475
+  },
+  "label": "trustworthy-litellm-python-stream",
+  "latency_p50_ms": 303.306,
+  "latency_p99_ms": 725.267,
+  "peak_rss_mb": null,
+  "streaming": true,
+  "ttft_ms": {
+    "p50": 27.581,
+    "p99": 58.34
+  }
+}

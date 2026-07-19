@@ -1,0 +1,10 @@
+{
+  "gateway": "portkey",
+  "concurrency": 64,
+  "elapsed_s": 1.9138624479983264,
+  "sustained_rps": 1095.52787227223,
+  "p99_ms": 299.743703,
+  "errors": 0,
+  "avg_cpu_percent": 150.02105263157895,
+  "peak_rss_gb": 0.195018752
+}

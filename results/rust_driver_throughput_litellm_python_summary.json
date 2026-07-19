@@ -1,0 +1,10 @@
+{
+  "gateway": "litellm-python",
+  "concurrency": 64,
+  "elapsed_s": 11.284820335000404,
+  "sustained_rps": 177.47657272613287,
+  "p99_ms": 557.355887,
+  "errors": 0,
+  "avg_cpu_percent": 98.90089285714289,
+  "peak_rss_gb": 0.349659136
+}

@@ -1,0 +1,10 @@
+{
+  "gateway": "litellm-rust",
+  "concurrency": 64,
+  "elapsed_s": 0.8068033929994272,
+  "sustained_rps": 2814.3531702101873,
+  "p99_ms": 26.94463,
+  "errors": 0,
+  "avg_cpu_percent": 21.075000000000003,
+  "peak_rss_gb": 0.29710336
+}

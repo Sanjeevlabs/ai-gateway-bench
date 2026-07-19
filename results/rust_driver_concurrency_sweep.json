@@ -1,0 +1,211 @@
+{
+  "driver": "Rust reqwest persistent client",
+  "count": 2000,
+  "tested_concurrency": [
+    1,
+    4,
+    16,
+    64,
+    256
+  ],
+  "single_client_floor_p99_ms": 21.981512000000002,
+  "control_limit_ms": 43.963024000000004,
+  "retained_concurrency": [
+    1,
+    4,
+    16,
+    64
+  ],
+  "baseline_by_concurrency": {
+    "1": {
+      "p99_ms": 21.981512000000002,
+      "rps": 46.24469945691342,
+      "controlled": true
+    },
+    "4": {
+      "p99_ms": 22.423969,
+      "rps": 184.46782246417834,
+      "controlled": true
+    },
+    "16": {
+      "p99_ms": 22.673467,
+      "rps": 735.6020117118765,
+      "controlled": true
+    },
+    "64": {
+      "p99_ms": 24.015417,
+      "rps": 2855.6946976456065,
+      "controlled": true
+    },
+    "256": {
+      "p99_ms": 45.175076000000004,
+      "rps": 10686.195389527556,
+      "controlled": false
+    }
+  },
+  "dropped_concurrency": [
+    256
+  ],
+  "points": [
+    {
+      "gateway": "litellm-rust",
+      "concurrency": 1,
+      "direct_p99_ms": 21.981512000000002,
+      "gateway_p99_ms": 22.86892,
+      "p99_added_latency_ms": 0.8874079999999971,
+      "direct_rps": 46.24469945691342,
+      "gateway_rps": 45.24563873819559,
+      "errors": 0
+    },
+    {
+      "gateway": "litellm-python",
+      "concurrency": 1,
+      "direct_p99_ms": 21.981512000000002,
+      "gateway_p99_ms": 31.766969999999997,
+      "p99_added_latency_ms": 9.785457999999995,
+      "direct_rps": 46.24469945691342,
+      "gateway_rps": 34.37757124487294,
+      "errors": 0
+    },
+    {
+      "gateway": "bifrost",
+      "concurrency": 1,
+      "direct_p99_ms": 21.981512000000002,
+      "gateway_p99_ms": 22.73033,
+      "p99_added_latency_ms": 0.7488179999999964,
+      "direct_rps": 46.24469945691342,
+      "gateway_rps": 44.82304680654159,
+      "errors": 0
+    },
+    {
+      "gateway": "portkey",
+      "concurrency": 1,
+      "direct_p99_ms": 21.981512000000002,
+      "gateway_p99_ms": 24.762531,
+      "p99_added_latency_ms": 2.781018999999997,
+      "direct_rps": 46.24469945691342,
+      "gateway_rps": 43.15668997275413,
+      "errors": 0
+    },
+    {
+      "gateway": "litellm-rust",
+      "concurrency": 4,
+      "direct_p99_ms": 22.423969,
+      "gateway_p99_ms": 23.033559,
+      "p99_added_latency_ms": 0.6095900000000007,
+      "direct_rps": 184.46782246417834,
+      "gateway_rps": 181.24136512557064,
+      "errors": 0
+    },
+    {
+      "gateway": "litellm-python",
+      "concurrency": 4,
+      "direct_p99_ms": 22.423969,
+      "gateway_p99_ms": 49.373609,
+      "p99_added_latency_ms": 26.949640000000002,
+      "direct_rps": 184.46782246417834,
+      "gateway_rps": 92.71060082173305,
+      "errors": 0
+    },
+    {
+      "gateway": "bifrost",
+      "concurrency": 4,
+      "direct_p99_ms": 22.423969,
+      "gateway_p99_ms": 23.052722000000003,
+      "p99_added_latency_ms": 0.6287530000000032,
+      "direct_rps": 184.46782246417834,
+      "gateway_rps": 180.22936818450253,
+      "errors": 0
+    },
+    {
+      "gateway": "portkey",
+      "concurrency": 4,
+      "direct_p99_ms": 22.423969,
+      "gateway_p99_ms": 25.199926,
+      "p99_added_latency_ms": 2.775957000000002,
+      "direct_rps": 184.46782246417834,
+      "gateway_rps": 174.03815313524,
+      "errors": 0
+    },
+    {
+      "gateway": "litellm-rust",
+      "concurrency": 16,
+      "direct_p99_ms": 22.673467,
+      "gateway_p99_ms": 23.000501,
+      "p99_added_latency_ms": 0.32703400000000116,
+      "direct_rps": 735.6020117118765,
+      "gateway_rps": 721.78633667653,
+      "errors": 0
+    },
+    {
+      "gateway": "litellm-python",
+      "concurrency": 16,
+      "direct_p99_ms": 22.673467,
+      "gateway_p99_ms": 274.018319,
+      "p99_added_latency_ms": 251.34485200000003,
+      "direct_rps": 735.6020117118765,
+      "gateway_rps": 158.38587626854624,
+      "errors": 0
+    },
+    {
+      "gateway": "bifrost",
+      "concurrency": 16,
+      "direct_p99_ms": 22.673467,
+      "gateway_p99_ms": 23.564402,
+      "p99_added_latency_ms": 0.8909350000000025,
+      "direct_rps": 735.6020117118765,
+      "gateway_rps": 722.6675848505213,
+      "errors": 0
+    },
+    {
+      "gateway": "portkey",
+      "concurrency": 16,
+      "direct_p99_ms": 22.673467,
+      "gateway_p99_ms": 30.911542999999998,
+      "p99_added_latency_ms": 8.238076,
+      "direct_rps": 735.6020117118765,
+      "gateway_rps": 673.5999802947756,
+      "errors": 0
+    },
+    {
+      "gateway": "litellm-rust",
+      "concurrency": 64,
+      "direct_p99_ms": 24.015417,
+      "gateway_p99_ms": 64.299497,
+      "p99_added_latency_ms": 40.28408,
+      "direct_rps": 2855.6946976456065,
+      "gateway_rps": 2722.165164657367,
+      "errors": 0
+    },
+    {
+      "gateway": "litellm-python",
+      "concurrency": 64,
+      "direct_p99_ms": 24.015417,
+      "gateway_p99_ms": 570.058326,
+      "p99_added_latency_ms": 546.042909,
+      "direct_rps": 2855.6946976456065,
+      "gateway_rps": 179.75283956877354,
+      "errors": 0
+    },
+    {
+      "gateway": "bifrost",
+      "concurrency": 64,
+      "direct_p99_ms": 24.015417,
+      "gateway_p99_ms": 52.698799,
+      "p99_added_latency_ms": 28.683382,
+      "direct_rps": 2855.6946976456065,
+      "gateway_rps": 2719.0810210934505,
+      "errors": 0
+    },
+    {
+      "gateway": "portkey",
+      "concurrency": 64,
+      "direct_p99_ms": 24.015417,
+      "gateway_p99_ms": 132.434158,
+      "p99_added_latency_ms": 108.418741,
+      "direct_rps": 2855.6946976456065,
+      "gateway_rps": 1360.2625082469656,
+      "errors": 0
+    }
+  ]
+}

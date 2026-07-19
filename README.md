@@ -20,6 +20,18 @@ The cost chart estimates gateway request cost from measured CPU, peak RSS, and s
 
 The session chart replays deterministic Claude Code and Codex-style control loops with non-streaming requests for apples-to-apples comparison.
 
+![Latency versus concurrency](analyze/latency_vs_concurrency.png)
+
+The concurrency chart uses a persistent Rust reqwest driver and retains points with a controlled direct baseline.
+
+![Streaming TTFT overhead](analyze/ttft_overhead.png)
+
+The TTFT chart includes streaming-capable gateways and labels unavailable streaming routes explicitly.
+
+![Estimated RPS per dollar](analyze/rps_per_dollar.png)
+
+The RPS-per-dollar chart uses the highest retained throughput point and measured CPU and peak RSS.
+
 ## What it tests
 
 Each scenario is one folder under `scenarios/`. Load/streaming scenarios use Locust; the rest are plain Python scripts.
@@ -59,7 +71,7 @@ Per-gateway setup (how to start each and point it at the mock) is in `gateways/<
 
 ## Results
 
-The charts are generated from real local runs against the fast Rust mock, not placeholders. Raw per-run data is in `results/`.
+The charts are generated from real local runs against the fast Rust mock using a persistent Rust reqwest load driver for concurrency and throughput. The direct baseline remained controlled through concurrency 64; concurrency 256 was dropped because its p99 exceeded twice the single-client floor. Raw per-run data is in `results/`. Portkey OSS currently returns HTTP 500 for streaming Anthropic Messages requests.
 
 ## Cost estimate
 

@@ -1,0 +1,11 @@
+{
+  "concurrency": 4,
+  "count": 2000,
+  "elapsed_s": 21.572506081,
+  "errors": [],
+  "label": "trustworthy-rust-driver-litellm-python-c4",
+  "latency_p50_ms": 42.479818,
+  "latency_p99_ms": 49.373609,
+  "rps": 92.71060082173305,
+  "url": "http://127.0.0.1:8102/v1/messages"
+}

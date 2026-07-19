@@ -1,0 +1,11 @@
+{
+  "concurrency": 1,
+  "count": 2000,
+  "elapsed_s": 46.342757085,
+  "errors": [],
+  "label": "trustworthy-rust-driver-portkey-c1",
+  "latency_p50_ms": 23.121574,
+  "latency_p99_ms": 24.762531,
+  "rps": 43.15668997275413,
+  "url": "http://127.0.0.1:8787/v1/messages"
+}
