@@ -80,6 +80,12 @@ async fn main() {
     let listener = tokio::net::TcpListener::bind((address, port))
         .await
         .expect("mock upstream binds");
+    // TCP_NODELAY: without it a streamed response of many small SSE writes can stall
+    // ~40 ms on the last small segment (Nagle waiting for the peer's delayed ACK) — a
+    // cost the non-streaming path never pays, so it skews any overhead comparison.
+    let listener = axum::serve::ListenerExt::tap_io(listener, |tcp_stream: &mut tokio::net::TcpStream| {
+        let _ = tcp_stream.set_nodelay(true);
+    });
     axum::serve(listener, app)
         .await
         .expect("mock upstream serves");
